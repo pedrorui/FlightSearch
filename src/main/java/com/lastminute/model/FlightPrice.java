@@ -1,21 +1,23 @@
 package com.lastminute.model;
 
-import java.math.BigDecimal;
-
-public class FlightPrice {
+public class FlightPrice
+{
     private final String flightCode;
-    private final BigDecimal price;
+    private final Money price;
 
-    public FlightPrice(String flightCode, BigDecimal price) {
+    public FlightPrice(String flightCode, Money price)
+    {
         this.flightCode = flightCode;
         this.price = price;
     }
 
-    public String getFlightCode() {
+    public String getFlightCode()
+    {
         return flightCode;
     }
 
-    public BigDecimal getPrice() {
+    public Money getPrice()
+    {
         return price;
     }
 }

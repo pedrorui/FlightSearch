@@ -2,6 +2,7 @@ package com.lastminute.core;
 
 import java.time.LocalDateTime;
 
-public interface TimeProvider {
+public interface TimeProvider
+{
     LocalDateTime getCurrentDateTime();
 }

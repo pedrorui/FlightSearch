@@ -2,10 +2,11 @@ package com.lastminute.services;
 
 import org.junit.Test;
 
-public class FlightSearchServiceTest {
-
+public class FlightSearchServiceTest
+{
     @Test
-    public void searchFlightReturnRoutesAndPricesSuccess() {
+    public void searchFlightReturnRoutesAndPricesSuccess()
+    {
 
     }
 }
