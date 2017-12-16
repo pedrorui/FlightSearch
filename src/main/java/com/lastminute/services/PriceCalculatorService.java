@@ -8,6 +8,7 @@ import com.lastminute.model.PriceCalculationRequest;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -16,8 +17,8 @@ public class PriceCalculatorService
 {
     private static final NavigableMap<Long, BigDecimal> DAYS_TO_FLIGHT_PRICE_MULTIPLIERS = new TreeMap<>();
 
-    private final TimeProvider timeProvider;
     private final PriceDataProvider priceDataProvider;
+    private final TimeProvider timeProvider;
 
     static
     {
@@ -27,10 +28,11 @@ public class PriceCalculatorService
         DAYS_TO_FLIGHT_PRICE_MULTIPLIERS.put(31L, new BigDecimal(0.8)); // > 30
     }
 
-    public PriceCalculatorService(TimeProvider timeProvider, PriceDataProvider priceDataProvider)
+    public PriceCalculatorService(PriceDataProvider priceDataProvider, TimeProvider timeProvider)
     {
-        this.timeProvider = timeProvider;
+
         this.priceDataProvider = priceDataProvider;
+        this.timeProvider = timeProvider;
     }
 
     public Money calculate(PriceCalculationRequest request)
@@ -44,12 +46,17 @@ public class PriceCalculatorService
 
     private BigDecimal calculateTotalPrice(PriceCalculationRequest request)
     {
-        long daysToFlight = ChronoUnit.DAYS.between(timeProvider.getCurrentDateTime(), request.getDepartureDate());
-
         BigDecimal basePrice = priceDataProvider.getPriceForFlight(request.getFlightCode());
+
+        long daysToFlight = getDaysToFlight(request.getDepartureDate());
         BigDecimal priceMultiplier = DAYS_TO_FLIGHT_PRICE_MULTIPLIERS.floorEntry(daysToFlight).getValue();
 
         return basePrice.multiply(priceMultiplier).multiply(new BigDecimal(request.getPassengers())).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    private long getDaysToFlight(LocalDateTime departure)
+    {
+        return ChronoUnit.DAYS.between(timeProvider.getCurrentDateTime(), departure);
     }
 
     private void validateRequest(PriceCalculationRequest request)
@@ -69,7 +76,7 @@ public class PriceCalculatorService
             throw new IllegalArgumentException("Departure data must be supplied");
         }
 
-        if (ChronoUnit.DAYS.between(timeProvider.getCurrentDateTime(), request.getDepartureDate()) < 0)
+        if (getDaysToFlight(request.getDepartureDate()) < 0)
         {
             throw new IllegalArgumentException("Departure data cannot be in the past");
         }

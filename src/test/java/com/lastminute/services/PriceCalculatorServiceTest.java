@@ -34,7 +34,7 @@ public class PriceCalculatorServiceTest
     @Before
     public void setup()
     {
-        priceCalculatorService = new PriceCalculatorService(timeProvider, priceDataProvider);
+        priceCalculatorService = new PriceCalculatorService(priceDataProvider, timeProvider);
     }
 
     @Test

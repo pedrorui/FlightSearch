@@ -9,6 +9,10 @@ class Edges
     void addEdge(String edge, String flightNumber)
     {
         List<String> flights = edges.putIfAbsent(edge, new LinkedList<>());
+        if (flights == null)
+        {
+            flights = edges.get(edge);
+        }
         flights.add(flightNumber);
     }
 
