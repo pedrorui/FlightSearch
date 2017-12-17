@@ -3,22 +3,22 @@ package com.lastminute.model;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public class PriceCalculationRequest
+public class TicketPriceRequest
 {
     private final String flightCode;
-    private final LocalDateTime departureDate;
+    private final LocalDateTime departure;
     private final int passengers;
     private final Currency currency;
 
-    public PriceCalculationRequest(String flightCode, LocalDateTime departureDate, int passengers)
+    public TicketPriceRequest(String flightCode, LocalDateTime departureDate, int passengers)
     {
         this(flightCode, departureDate, passengers, null);
     }
 
-    public PriceCalculationRequest(String flightCode, LocalDateTime departureDate, int passengers, Currency currency)
+    public TicketPriceRequest(String flightCode, LocalDateTime departure, int passengers, Currency currency)
     {
         this.flightCode = flightCode;
-        this.departureDate = departureDate;
+        this.departure = departure;
         this.passengers = passengers;
         this.currency = currency;
     }
@@ -28,9 +28,9 @@ public class PriceCalculationRequest
         return flightCode;
     }
 
-    public LocalDateTime getDepartureDate()
+    public LocalDateTime getDeparture()
     {
-        return departureDate;
+        return departure;
     }
 
     public int getPassengers()

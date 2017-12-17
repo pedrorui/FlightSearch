@@ -1,8 +1,9 @@
 package com.lastminute.data;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 public interface PriceDataProvider
 {
-    BigDecimal getPriceForFlight(final String flightCode);
+    Optional<BigDecimal> getPriceForFlight(final String flightCode);
 }

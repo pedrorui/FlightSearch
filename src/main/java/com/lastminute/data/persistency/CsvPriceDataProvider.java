@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public class CsvPriceDataProvider implements PriceDataProvider
@@ -18,8 +19,13 @@ public class CsvPriceDataProvider implements PriceDataProvider
     }
 
     @Override
-    public BigDecimal getPriceForFlight(String flightCode)
+    public Optional<BigDecimal> getPriceForFlight(String flightCode)
     {
-        return flightPrices.get(flightCode);
+        if (flightPrices.isEmpty() || !flightPrices.containsKey(flightCode))
+        {
+            return Optional.empty();
+        }
+
+        return Optional.of(flightPrices.get(flightCode));
     }
 }

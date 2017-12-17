@@ -1,12 +1,12 @@
 package com.lastminute.infrastructure;
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
 import static com.lastminute.infrastructure.CsvFiles.readAllRecords;
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 public class ReadFlightsTest
 {

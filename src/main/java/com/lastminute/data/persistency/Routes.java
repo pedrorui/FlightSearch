@@ -1,6 +1,8 @@
 package com.lastminute.data.persistency;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,4 +24,25 @@ class Routes
     {
         return vertices.get(origin).getFlights(destination);
     }
+
+    private class Edges
+    {
+        private Map<String, List<String>> edges = new HashMap<>();
+
+        void addEdge(String edge, String flightNumber)
+        {
+            List<String> flights = edges.putIfAbsent(edge, new LinkedList<>());
+            if (flights == null)
+            {
+                flights = edges.get(edge);
+            }
+            flights.add(flightNumber);
+        }
+
+        List<String> getFlights(String destination)
+        {
+            return edges.getOrDefault(destination, Collections.emptyList());
+        }
+    }
+
 }

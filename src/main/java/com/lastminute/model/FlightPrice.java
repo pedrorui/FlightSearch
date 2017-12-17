@@ -3,9 +3,9 @@ package com.lastminute.model;
 public class FlightPrice
 {
     private final String flightCode;
-    private final Money price;
+    private final TicketPrice price;
 
-    public FlightPrice(String flightCode, Money price)
+    public FlightPrice(String flightCode, TicketPrice price)
     {
         this.flightCode = flightCode;
         this.price = price;
@@ -16,7 +16,7 @@ public class FlightPrice
         return flightCode;
     }
 
-    public Money getPrice()
+    public TicketPrice getPrice()
     {
         return price;
     }
