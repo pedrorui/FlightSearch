@@ -2,6 +2,7 @@ package com.lastminute.services;
 
 import com.lastminute.core.TimeProvider;
 import com.lastminute.data.PriceDataProvider;
+import com.lastminute.model.Currency;
 import com.lastminute.model.Money;
 import com.lastminute.model.PriceCalculationRequest;
 import org.junit.Before;
@@ -50,6 +51,7 @@ public class PriceCalculatorServiceTest
         Money price = priceCalculatorService.calculate(request);
 
         assertThat(price.getAmount(), is(equalTo(BigDecimal.valueOf(8000, 2))));
+        assertThat(price.getCurrency(), is(equalTo(Currency.EURO)));
     }
 
     @Test
@@ -65,6 +67,7 @@ public class PriceCalculatorServiceTest
         Money price = priceCalculatorService.calculate(request);
 
         assertThat(price.getAmount(), is(equalTo(BigDecimal.valueOf(15760, 2))));
+        assertThat(price.getCurrency(), is(equalTo(Currency.EURO)));
     }
 
     @Test
@@ -80,6 +83,7 @@ public class PriceCalculatorServiceTest
         Money price = priceCalculatorService.calculate(request);
 
         assertThat(price.getAmount(), is(equalTo(BigDecimal.valueOf(90000, 2))));
+        assertThat(price.getCurrency(), is(equalTo(Currency.EURO)));
     }
 
     @Test
@@ -95,6 +99,7 @@ public class PriceCalculatorServiceTest
         Money price = priceCalculatorService.calculate(request);
 
         assertThat(price.getAmount(), is(equalTo(BigDecimal.valueOf(77700, 2))));
+        assertThat(price.getCurrency(), is(equalTo(Currency.EURO)));
     }
 
     @Test(expected = IllegalArgumentException.class)

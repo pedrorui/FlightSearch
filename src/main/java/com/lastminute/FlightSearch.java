@@ -4,6 +4,7 @@ import com.lastminute.core.DefaultTimeProvider;
 import com.lastminute.core.TimeProvider;
 import com.lastminute.data.persistency.CsvPriceDataProvider;
 import com.lastminute.data.persistency.CsvRouteDataProvider;
+import com.lastminute.infrastructure.ResourceLocator;
 import com.lastminute.model.FlightPrice;
 import com.lastminute.model.FlightSearchCriteria;
 import com.lastminute.services.FlightSearchService;
@@ -23,8 +24,10 @@ public class FlightSearch
 
     private void run()
     {
-        CsvPriceDataProvider priceDataProvider = new CsvPriceDataProvider(records(fullPathTo("flight-prices.csv")));
-        CsvRouteDataProvider routeDataProvider = new CsvRouteDataProvider(records(fullPathTo("flight-routes.csv")));
+        ResourceLocator locator = new ResourceLocator();
+
+        CsvPriceDataProvider priceDataProvider = new CsvPriceDataProvider(records(locator.fullPathTo("flight-prices.csv")));
+        CsvRouteDataProvider routeDataProvider = new CsvRouteDataProvider(records(locator.fullPathTo("flight-routes.csv")));
 
         TimeProvider timeProvider = new DefaultTimeProvider();
 
@@ -36,10 +39,5 @@ public class FlightSearch
         {
             System.out.println(flightPrice);
         }
-    }
-
-    private String fullPathTo(String fileName)
-    {
-        return getClass().getClassLoader().getResource(fileName).getPath();
     }
 }
