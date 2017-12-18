@@ -29,6 +29,7 @@ public class RoutesTest
     public void allRoutesLoaded()
     {
         assertThat(routes.size(), is(equalTo(3)));
+        assertThat(routes.getNames(), containsInAnyOrder("BCN", "CPH", "AMS"));
     }
 
     @Test

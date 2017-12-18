@@ -7,9 +7,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Adjacency set to store the neighbourhood of a vertex
+ */
 class Routes
 {
-    private Map<String, Edges> vertices = new HashMap<>();
+    private final Map<String, Edges> vertices = new HashMap<>();
 
     Routes addRoute(String origin, String destination, String flightNumber)
     {
@@ -25,12 +28,22 @@ class Routes
 
     List<String> findRoute(String origin, String destination)
     {
+        if (!vertices.containsKey(origin))
+        {
+            return Collections.emptyList();
+        }
+
         return getEdges(origin).getFlights(destination);
     }
 
     Edges getEdges(String origin)
     {
         return vertices.get(origin);
+    }
+
+    Set<String> getNames()
+    {
+        return vertices.keySet();
     }
 
     int size()
@@ -40,7 +53,7 @@ class Routes
 
     class Edges
     {
-        private Map<String, List<String>> edges = new HashMap<>();
+        private final Map<String, List<String>> edges = new HashMap<>();
 
         private Edges addEdge(String edge, String flightNumber)
         {
