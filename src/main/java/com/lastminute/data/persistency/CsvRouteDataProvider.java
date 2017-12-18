@@ -15,7 +15,7 @@ public class CsvRouteDataProvider implements RouteDataProvider
     }
 
     @Override
-    public List<String> getRoutes(String origin, String destination)
+    public List<String> getFlights(String origin, String destination)
     {
         return routes.findRoute(origin, destination);
     }

@@ -28,9 +28,4 @@ public class CsvPriceDataProvider implements PriceDataProvider
 
         return Optional.of(flightPrices.get(flightCode));
     }
-
-    public int size()
-    {
-        return flightPrices.size();
-    }
 }

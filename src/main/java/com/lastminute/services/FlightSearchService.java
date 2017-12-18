@@ -27,7 +27,7 @@ public class FlightSearchService
     {
         flightSearchCriteriaValidator.validate(searchCriteria);
 
-        List<String> flightCodes = routeDataProvider.getRoutes(searchCriteria.getOrigin(), searchCriteria.getDestination());
+        List<String> flightCodes = routeDataProvider.getFlights(searchCriteria.getOrigin(), searchCriteria.getDestination());
         List<FlightPrice> flightPrices = new ArrayList<>(flightCodes.size());
 
         for (String flightCode : flightCodes)

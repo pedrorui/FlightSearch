@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface RouteDataProvider
 {
-    List<String> getRoutes(String origin, String destination);
+    List<String> getFlights(String origin, String destination);
 }

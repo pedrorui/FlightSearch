@@ -5,12 +5,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 class Routes
 {
     private Map<String, Edges> vertices = new HashMap<>();
 
-    void addRoute(String origin, String destination, String flightNumber)
+    Routes addRoute(String origin, String destination, String flightNumber)
     {
         Edges edges = vertices.putIfAbsent(origin, new Edges());
         if (edges == null)
@@ -18,18 +19,30 @@ class Routes
             edges = vertices.get(origin);
         }
         edges.addEdge(destination, flightNumber);
+
+        return this;
     }
 
     List<String> findRoute(String origin, String destination)
     {
-        return vertices.get(origin).getFlights(destination);
+        return getEdges(origin).getFlights(destination);
     }
 
-    private class Edges
+    Edges getEdges(String origin)
+    {
+        return vertices.get(origin);
+    }
+
+    int size()
+    {
+        return vertices.size();
+    }
+
+    class Edges
     {
         private Map<String, List<String>> edges = new HashMap<>();
 
-        void addEdge(String edge, String flightNumber)
+        private Edges addEdge(String edge, String flightNumber)
         {
             List<String> flights = edges.putIfAbsent(edge, new LinkedList<>());
             if (flights == null)
@@ -37,6 +50,18 @@ class Routes
                 flights = edges.get(edge);
             }
             flights.add(flightNumber);
+
+            return this;
+        }
+
+        int size()
+        {
+            return edges.size();
+        }
+
+        Set<String> getNames()
+        {
+            return edges.keySet();
         }
 
         List<String> getFlights(String destination)
@@ -44,5 +69,4 @@ class Routes
             return edges.getOrDefault(destination, Collections.emptyList());
         }
     }
-
 }

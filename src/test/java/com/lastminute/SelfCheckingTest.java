@@ -2,6 +2,8 @@ package com.lastminute;
 
 import com.lastminute.core.TimeProvider;
 import com.lastminute.core.Validator;
+import com.lastminute.data.PriceDataProvider;
+import com.lastminute.data.RouteDataProvider;
 import com.lastminute.data.persistency.CsvPriceDataProvider;
 import com.lastminute.data.persistency.CsvRouteDataProvider;
 import com.lastminute.infrastructure.ResourceLocator;
@@ -47,8 +49,8 @@ public class SelfCheckingTest
 
         ResourceLocator resourceLocator = new ResourceLocator();
 
-        CsvPriceDataProvider priceDataProvider = new CsvPriceDataProvider(records(resourceLocator.fullPathTo("flight-prices.csv")));
-        CsvRouteDataProvider routeDataProvider = new CsvRouteDataProvider(records(resourceLocator.fullPathTo("flight-routes.csv")));
+        PriceDataProvider priceDataProvider = new CsvPriceDataProvider(records(resourceLocator.fullPathTo("flight-prices.csv")));
+        RouteDataProvider routeDataProvider = new CsvRouteDataProvider(records(resourceLocator.fullPathTo("flight-routes.csv")));
 
         Validator<TicketPriceRequest> priceCalculationRequestValidator = new TicketPriceRequestValidator();
         Validator<FlightSearchCriteria> flightSearchCriteriaValidator = new FlightSearchCriteriaValidator();

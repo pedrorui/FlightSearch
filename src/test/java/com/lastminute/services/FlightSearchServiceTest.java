@@ -51,7 +51,7 @@ public class FlightSearchServiceTest
     public void searchFlightReturnRoutesAndPricesSuccess()
     {
         List<String> flightCodes = Arrays.asList("TK2372", "TK2659", "LH5909");
-        when(routeDataProvider.getRoutes(anyString(), anyString()))
+        when(routeDataProvider.getFlights(anyString(), anyString()))
             .thenReturn(flightCodes);
 
         when(priceCalculatorService.calculateTicketPrice(any(TicketPriceRequest.class)))
