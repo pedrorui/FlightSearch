@@ -7,13 +7,13 @@ import com.lastminute.data.RouteDataProvider;
 import com.lastminute.data.persistency.CsvPriceDataProvider;
 import com.lastminute.data.persistency.CsvRouteDataProvider;
 import com.lastminute.infrastructure.ResourceLocator;
-import com.lastminute.validation.FlightSearchCriteriaValidator;
-import com.lastminute.validation.TicketPriceRequestValidator;
 import com.lastminute.model.FlightPrice;
 import com.lastminute.model.FlightSearchCriteria;
 import com.lastminute.model.TicketPriceRequest;
 import com.lastminute.services.FlightSearchService;
 import com.lastminute.services.PriceCalculatorService;
+import com.lastminute.validation.FlightSearchCriteriaValidator;
+import com.lastminute.validation.TicketPriceRequestValidator;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeClass;
@@ -67,7 +67,12 @@ public class SelfCheckingTest
 
         assertThat(flightPrices, hasSize(3));
         assertThat(flightPrices, everyItem(hasProperty("price")));
+        assertThat(flightPrices.get(0).getFlightCode(), is(equalTo("TK2372")));
         assertThat(flightPrices.get(0).getPrice().getAmount(), is(equalTo(BigDecimal.valueOf(15760, 2))));
+        assertThat(flightPrices.get(1).getFlightCode(), is(equalTo("TK2659")));
+        assertThat(flightPrices.get(1).getPrice().getAmount(), is(equalTo(BigDecimal.valueOf(19840, 2))));
+        assertThat(flightPrices.get(2).getFlightCode(), is(equalTo("LH5909")));
+        assertThat(flightPrices.get(2).getPrice().getAmount(), is(equalTo(BigDecimal.valueOf(9040, 2))));
     }
 
     @Test
@@ -78,7 +83,10 @@ public class SelfCheckingTest
 
         assertThat(flightPrices, hasSize(2));
         assertThat(flightPrices, everyItem(hasProperty("price")));
+        assertThat(flightPrices.get(0).getFlightCode(), is(equalTo("TK8891")));
         assertThat(flightPrices.get(0).getPrice().getAmount(), is(equalTo(BigDecimal.valueOf(90000, 2))));
+        assertThat(flightPrices.get(1).getFlightCode(), is(equalTo("LH1085")));
+        assertThat(flightPrices.get(1).getPrice().getAmount(), is(equalTo(BigDecimal.valueOf(53280, 2))));
     }
 
     @Test
@@ -89,7 +97,10 @@ public class SelfCheckingTest
 
         assertThat(flightPrices, hasSize(2));
         assertThat(flightPrices, everyItem(hasProperty("price")));
+        assertThat(flightPrices.get(0).getFlightCode(), is(equalTo("IB2171")));
         assertThat(flightPrices.get(0).getPrice().getAmount(), is(equalTo(BigDecimal.valueOf(77700, 2))));
+        assertThat(flightPrices.get(1).getFlightCode(), is(equalTo("LH5496")));
+        assertThat(flightPrices.get(1).getPrice().getAmount(), is(equalTo(BigDecimal.valueOf(87900, 2))));
     }
 
     @Test
