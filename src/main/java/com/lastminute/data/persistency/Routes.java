@@ -55,7 +55,7 @@ class Routes
     {
         private final Map<String, List<String>> edges = new HashMap<>();
 
-        private Edges addEdge(String edge, String flightNumber)
+        private void addEdge(String edge, String flightNumber)
         {
             List<String> flights = edges.putIfAbsent(edge, new LinkedList<>());
             if (flights == null)
@@ -63,8 +63,6 @@ class Routes
                 flights = edges.get(edge);
             }
             flights.add(flightNumber);
-
-            return this;
         }
 
         int size()
