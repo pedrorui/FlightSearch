@@ -6,6 +6,9 @@ import org.testng.annotations.Test;
 
 import java.time.LocalDateTime;
 
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+
 public class TicketPriceRequestValidatorTest
 {
     private TicketPriceRequestValidator validator;
@@ -31,7 +34,17 @@ public class TicketPriceRequestValidatorTest
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void flightCodeNullThrowsException()
     {
-        LocalDateTime departureDate = LocalDateTime.of(2018, 1, 30, 6, 0);
-        validator.validate(new TicketPriceRequest(null, departureDate, 2));
+        validator.validate(new TicketPriceRequest(null, LocalDateTime.now(), 2));
+    }
+
+    @Test
+    public void validCalculationRequestValidatedByAllRules()
+    {
+        TicketPriceRequestValidator spy = spy(validator);
+
+        TicketPriceRequest ticketPriceRequest = new TicketPriceRequest("LH5909", LocalDateTime.now(), 2);
+        spy.validate(ticketPriceRequest);
+
+        verify(spy).validate(ticketPriceRequest);
     }
 }

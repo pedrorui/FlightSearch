@@ -4,6 +4,7 @@ import com.lastminute.core.TimeProvider;
 import com.lastminute.core.Validator;
 import com.lastminute.data.persistency.CsvPriceDataProvider;
 import com.lastminute.data.persistency.CsvRouteDataProvider;
+import com.lastminute.infrastructure.ResourceLocator;
 import com.lastminute.validation.FlightSearchCriteriaValidator;
 import com.lastminute.validation.TicketPriceRequestValidator;
 import com.lastminute.model.FlightPrice;
@@ -44,8 +45,10 @@ public class SelfCheckingTest
 
         when(timeProvider.getCurrentDateTime()).thenReturn(LocalDateTime.of(2017, 12, 17, 15, 39));
 
-        CsvPriceDataProvider priceDataProvider = new CsvPriceDataProvider(records(fullPathTo("flight-prices.csv")));
-        CsvRouteDataProvider routeDataProvider = new CsvRouteDataProvider(records(fullPathTo("flight-routes.csv")));
+        ResourceLocator resourceLocator = new ResourceLocator();
+
+        CsvPriceDataProvider priceDataProvider = new CsvPriceDataProvider(records(resourceLocator.fullPathTo("flight-prices.csv")));
+        CsvRouteDataProvider routeDataProvider = new CsvRouteDataProvider(records(resourceLocator.fullPathTo("flight-routes.csv")));
 
         Validator<TicketPriceRequest> priceCalculationRequestValidator = new TicketPriceRequestValidator();
         Validator<FlightSearchCriteria> flightSearchCriteriaValidator = new FlightSearchCriteriaValidator();
@@ -94,10 +97,5 @@ public class SelfCheckingTest
         List<FlightPrice> flightPrices = flightSearchService.searchFlightPrices(new FlightSearchCriteria("CDG", "FRA", departure, 2));
 
         assertThat(flightPrices, hasSize(0));
-    }
-
-    private String fullPathTo(String fileName)
-    {
-        return getClass().getClassLoader().getResource(fileName).getPath();
     }
 }

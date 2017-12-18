@@ -2,6 +2,8 @@ package com.lastminute.services;
 
 import com.lastminute.core.TimeProvider;
 import com.lastminute.data.PriceDataProvider;
+import com.lastminute.exceptions.PriceCalculationException;
+import com.lastminute.model.Currency;
 import com.lastminute.model.TicketPrice;
 import com.lastminute.model.TicketPriceRequest;
 import com.lastminute.validation.TicketPriceRequestValidator;
@@ -42,7 +44,7 @@ public class PriceCalculatorServiceTest
     }
 
     @Test
-    public void singlePassengerMoreThan30DaysToDepartureSuccess()
+    public void calculatePriceForSinglePassengerMoreThan30DaysToDepartureSuccess()
     {
         LocalDateTime departureDate = LocalDateTime.of(2018, 2, 1, 6, 0);
         LocalDateTime currentDate = LocalDateTime.of(2017, 12, 1, 6, 0);
@@ -54,10 +56,11 @@ public class PriceCalculatorServiceTest
         TicketPrice price = priceCalculatorService.calculateTicketPrice(request);
 
         assertThat(price.getAmount(), is(equalTo(BigDecimal.valueOf(8000, 2))));
+        assertThat(price.getCurrency(), is(equalTo(Currency.EURO)));
     }
 
     @Test
-    public void singlePassenger17DaysToDepartureSuccess()
+    public void calculatePriceForSinglePassenger17DaysToDepartureSuccess()
     {
         LocalDateTime departureDate = LocalDateTime.of(2018, 1, 30, 6, 0);
         LocalDateTime currentDate = LocalDateTime.of(2018, 1, 13, 6, 0);
@@ -72,7 +75,7 @@ public class PriceCalculatorServiceTest
     }
 
     @Test
-    public void threePassengers15DaysToDepartureSuccess()
+    public void calculatePriceForThreePassengers15DaysToDepartureSuccess()
     {
         LocalDateTime departureDate = LocalDateTime.of(2018, 1, 30, 6, 0);
         LocalDateTime currentDate = LocalDateTime.of(2018, 1, 15, 6, 0);
@@ -87,7 +90,7 @@ public class PriceCalculatorServiceTest
     }
 
     @Test
-    public void twoPassengers2DaysToDepartureSuccess()
+    public void calculatePriceForTwoPassengers2DaysToDepartureSuccess()
     {
         LocalDateTime departureDate = LocalDateTime.of(2018, 1, 30, 6, 0);
         LocalDateTime currentDate = LocalDateTime.of(2018, 1, 28, 6, 0);
@@ -99,5 +102,29 @@ public class PriceCalculatorServiceTest
         TicketPrice price = priceCalculatorService.calculateTicketPrice(request);
 
         assertThat(price.getAmount(), is(equalTo(BigDecimal.valueOf(77700, 2))));
+    }
+
+    @Test(expectedExceptions = PriceCalculationException.class)
+    public void calculatePriceForUnknownFlightThrowsException()
+    {
+        LocalDateTime departureDate = LocalDateTime.of(2018, 1, 30, 6, 0);
+
+        when(priceDataProvider.getPriceForFlight(FLIGHT_CODE)).thenReturn(Optional.empty());
+
+        TicketPriceRequest request = new TicketPriceRequest(FLIGHT_CODE, departureDate, 2);
+        priceCalculatorService.calculateTicketPrice(request);
+    }
+
+    @Test(expectedExceptions = PriceCalculationException.class)
+    public void calculatePriceForInvalidDepartureDateThrowsException()
+    {
+        LocalDateTime departureDate = LocalDateTime.of(2018, 1, 28, 6, 0);
+        LocalDateTime currentDate = LocalDateTime.of(2018, 1, 31, 6, 0);
+
+        when(timeProvider.getCurrentDateTime()).thenReturn(currentDate);
+        when(priceDataProvider.getPriceForFlight(FLIGHT_CODE)).thenReturn(Optional.empty());
+
+        TicketPriceRequest request = new TicketPriceRequest(FLIGHT_CODE, departureDate, 2);
+        priceCalculatorService.calculateTicketPrice(request);
     }
 }
