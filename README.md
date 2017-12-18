@@ -2,7 +2,7 @@
 
 ## Problem
 
-Your goal is to implement a simple flight search.
+Implement a simple flight search.
 
 **Given**
 
@@ -20,24 +20,9 @@ Your goal is to implement a simple flight search.
 
 ## Implementation considerations
 
-We ask you to solve it using the **Java** programming language. You are only allowed to use test libraries (JUnit, TestNG, Hamcrest, ...) and nothing else.
-The project skeleton is already provided, with Maven and Gradle configured as build tools.
+* Automated tests run ./gradlew test
 
-Flight routes and base prices are given in the CSV format. You can find them in `src/main/resources` directory. A rudimentary CSV client for reading the data (`com.lastminute.util.CsvFiles`) with simple tests is provided by us. Feel free to use or implement your own data access mechanism.
-
-Remember that **automated and self-checking tests** are mandatory. You should provide sufficient evidence that your solution is complete by, at a minimum, indicating that it works correctly against the supplied test data.
-
-Put your complete solution in `github.com` under your account (we are curious about your experiments, pet projects and open-source contributions!) or send it compressed by email if you prefer to keep it private.
-
-Although the assignment is initially simple, remember that **you will extend it during the on-site coding interview** by implementing new features. Keep the code clean and maintainable!
-
-## What we value most?
-
-The goal is to provide us with a full understanding of your coding style and skills. We’ll pay particular attention to:
-
-* readable and well-structured code
-* design and domain modeling
-* quality of tests
+* Self-checking tests run ./gradlew selfCheckingTest
 
 ## Business rules and constraints
 
